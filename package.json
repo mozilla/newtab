@@ -1,0 +1,11 @@
+{
+  "name": "newnewtab",
+  "version": "0.0.0",
+  "description": "new new newtab",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "k88hudson",
+  "license": "MPL-2.0"
+}
