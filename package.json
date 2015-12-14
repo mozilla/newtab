@@ -4,8 +4,32 @@
   "description": "new new newtab",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "prebuild:js": "rm -rf ./www",
+    "build:js": "webpack -p --optimize-dedupe",
+    "build:css": "node-sass src/main.scss -o www --source-map www/main.css.map",
+    "watch:js": "webpack -w -d",
+    "watch:css": "npm run build:css && npm run build:css -- -w -r",
+    "server": "webpack-dev-server --port=1944",
+    "start": "npm run server & npm run watch:js & npm run watch:css",
+    "compile": "babel test.js > node"
   },
   "author": "k88hudson",
-  "license": "MPL-2.0"
+  "license": "MPL-2.0",
+  "devDependencies": {
+    "babel": "^6.3.13",
+    "babel-loader": "^6.2.0",
+    "babel-preset-react": "^6.3.13",
+    "node-sass": "^3.4.2",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0",
+    "webpack-notifier": "^1.2.1"
+  },
+  "dependencies": {
+    "babel-core": "^6.3.17",
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-redux": "^4.0.1",
+    "redux": "^3.0.5",
+    "redux-thunk": "^1.0.1"
+  }
 }

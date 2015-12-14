@@ -1,0 +1,54 @@
+.tile {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  border: 1px solid #DDD;
+  border-radius: $tile-border-radius;
+  box-shadow: $tile-box-shadow;
+  border: $tile-border;
+  overflow: hidden;
+  margin: 0 $tile-gutter-h $tile-gutter-v 0;
+  color: $tile-text-color;
+  font-size: $tile-font-size;
+
+  .tile-img-container {
+    width: $tile-width;
+    height: $tile-height;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tile-img,
+  .tile-img-rollover {
+    border-radius: $tile-border-radius $tile-border-radius 0 0;
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .tile-img-rollover {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+  }
+
+  &:hover .tile-img-rollover {
+    opacity: 1;
+  }
+
+  .tile-title {
+    background-color: $tile-title-bg-color;
+    text-align: center;
+    padding: 10px;
+  }
+
+  &:hover .tile-title {
+    background-color: $tile-title-hover-color;
+    color: $tile-title-hover-text-color;
+  }
+}
