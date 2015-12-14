@@ -1,4 +1,4 @@
-module.exports = function (sites) {
+module.exports = function formatHistoryTiles(sites) {
   return sites.map(site => {
     return {
       title: new URL(site.url).host.replace('www.', ''),
@@ -6,5 +6,5 @@ module.exports = function (sites) {
       url: site.url,
       frecency: site.frecency
     };
-  }).filter((site, index, arr) => arr.map(s => s.title).indexOf(site.title) === index)
-}
+  }).filter((site, index, arr) => arr.map(s => s.title).indexOf(site.title) === index);
+};

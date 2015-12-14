@@ -85,6 +85,26 @@ module.exports = {
       default:
         return state;
     }
+  },
+
+  Search(state = {searchString: '', isLoading: false, suggestions: []}, action = null) {
+    switch (action.type) {
+      case c.UPDATE_SEARCH_STRING:
+        return Object.assign({}, state, {
+          searchString: action.searchString
+        });
+      case c.REQUEST_SEARCH_SUGGESTIONS:
+        return Object.assign({}, state, {
+          isLoading: true
+        });
+      case c.RECEIVE_SEARCH_SUGGESTIONS:
+        return Object.assign({}, state, {
+          isLoading: false,
+          suggestions: action.suggestions || []
+        });
+      default:
+        return state;
+    }
   }
 
 };

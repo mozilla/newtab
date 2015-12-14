@@ -8,6 +8,7 @@ const srcPath = './src/main.js';
 const distDir = './www';
 const distFilename = 'main.js'
 
+// TODO: config
 const config = {};
 
 module.exports = {
@@ -27,20 +28,20 @@ module.exports = {
     }
   },
   module: {
-    // preLoaders: [{
-    //   test: /\.jsx?$/,
-    //   exclude: [/node_modules/],
-    //   loader: 'eslint'
-    // }],
+    preLoaders: [{
+      test: /\.jsx?$/,
+      exclude: [/node_modules/],
+      loader: 'eslint'
+    }],
     loaders: [{
       test: /\.jsx?$/,
       include: /.\/src\//,
       loader: 'babel',
       query: {
-        // presets: ['es2015', 'react', {
-        //   plugins: ['transform-object-rest-spread']
-        // }],
-        presets: ['react']
+        presets: ['es2015', 'react', {
+          plugins: ['transform-object-rest-spread']
+        }]
+        //presets: ['react']
       }
     }]
   },

@@ -1,7 +1,4 @@
-'use strict';
-
 const React = require('react');
-const ReactDOM = require('react-dom');
 const {connect} = require('react-redux');
 
 const actions = require('actions/index');
@@ -10,11 +7,14 @@ const Tile = require('components/Tile/Tile');
 const Search = require('components/Search/Search');
 const Settings = require('components/Settings/Settings');
 
-const App = React.createClass({
+const Base = React.createClass({
   componentWillMount: function () {
     this.props.dispatch(actions.getSuggestedDirectory());
+
+    // This sets up the comm stuff.
     // TODO: replace with getHistory
     this.props.dispatch(actions.initComm());
+
     this.props.dispatch(actions.getPrefs());
   },
   render: function () {
@@ -34,4 +34,4 @@ function select(state) {
   return state;
 }
 
-module.exports = connect(select)(App);
+module.exports = connect(select)(Base);

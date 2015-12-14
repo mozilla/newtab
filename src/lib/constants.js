@@ -11,7 +11,10 @@ const constants = {
   'RECEIVE_DIRECTORY',
   'REQUEST_INIT',
   'RECEIVE_INIT',
-  'RECEIVE_PREFS'
+  'RECEIVE_PREFS',
+  'REQUEST_SEARCH_SUGGESTIONS',
+  'RECEIVE_SEARCH_SUGGESTIONS',
+  'UPDATE_SEARCH_STRING'
 ].forEach(action => constants[action] = action);
 
 module.exports = constants;

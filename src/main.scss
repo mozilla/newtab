@@ -25,6 +25,12 @@ $search-left-padding: 36px;
   background-image: url($url);
 }
 
+@mixin listreset() {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
 @import './styles/normalize';
 
 body {
@@ -42,3 +48,4 @@ body {
 @import './components/Tile/Tile';
 @import './components/Search/Search';
 @import './components/Settings/Settings';
+@import './components/SearchMagic/SearchMagic';
