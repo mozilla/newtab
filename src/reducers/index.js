@@ -1,12 +1,19 @@
 const c = require('lib/constants');
 const formatHistoryTiles = require('lib/formatHistoryTiles');
-const {updateState} = require('lib/utils');
+const {updateState, parseBoolean} = require('lib/utils');
 
 const initialState = {
   Search: {
+    isLoading: false,
     searchString: '',
     suggestions: [],
-    currentSearchEngine: '',
+    currentEngine: {
+      name: '',
+      placeholder: '',
+      icons: [],
+      performSearch: () => {}
+    },
+    otherEngines: [],
     searchOptions: []
   },
 
@@ -32,21 +39,30 @@ const initialState = {
 };
 
 module.exports = {
-
   Search(state = initialState.Search, action = null) {
     switch (action.type) {
       case c.UPDATE_SEARCH_STRING:
-        return Object.assign({}, state, {
+        return updateState(state, {
           searchString: action.searchString
         });
       case c.REQUEST_SEARCH_SUGGESTIONS:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isLoading: true
         });
       case c.RECEIVE_SEARCH_SUGGESTIONS:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isLoading: false,
           suggestions: action.suggestions || []
+        });
+      case c.REQUEST_SEARCH_ENGINES:
+        return updateState(state, {
+          isLoading: true
+        });
+      case c.RECEIVE_SEARCH_ENGINES:
+        return updateState(state, {
+          isLoading: false,
+          currentEngine: action.current,
+          otherEngines: action.others
         });
       default:
         return state;
@@ -56,21 +72,21 @@ module.exports = {
   Sites(state = initialState.Sites, action = null) {
     switch (action.type) {
       case c.REQUEST_SUGGESTED_DIRECTORY:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isSuggestedLoading: true
         });
       case c.RECEIVE_SUGGESTED_DIRECTORY:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isSuggestedLoading: false,
           suggested: action.suggested,
           directory: action.directory
         });
-      case c.REQUEST_INIT:
+      case c.REQUEST_FRECENT:
         return updateState(state, {isHistoryLoading: true});
-      case c.RECEIVE_INIT:
+      case c.RECEIVE_FRECENT:
         return updateState(state, {
           isHistoryLoading: false,
-          history: formatHistoryTiles(action.history)
+          history: formatHistoryTiles(action.sites)
         });
       case c.REQUEST_SCREENSHOT:
         return state;
@@ -82,6 +98,16 @@ module.exports = {
             return updateState(tile, {imageURI: action.imageURI});
           })
         });
+
+      // LEGACY
+      case c.REQUEST_INIT:
+        return updateState(state, {isHistoryLoading: true});
+      case c.RECEIVE_INIT:
+        return updateState(state, {
+          isHistoryLoading: false,
+          history: formatHistoryTiles(action.history)
+        });
+
       default:
         return state;
     }
@@ -90,10 +116,10 @@ module.exports = {
   Prefs(state = initialState.Prefs, action = null) {
     switch (action.type) {
       case c.RECEIVE_PREFS:
-        return Object.assign({}, state, {
+        return updateState(state, {
           locale: action.prefs.get('general.useragent.locale'),
-          enabled: action.prefs.get('browser.newtabpage.enabled') === 'true',
-          showSuggested: action.prefs.get('browser.newtabpage.enhanced') === 'true'
+          enabled: parseBoolean(action.prefs.get('browser.newtabpage.enabled')),
+          showSuggested: parseBoolean(action.prefs.get('browser.newtabpage.enhanced'))
         });
       default:
         return state;
@@ -103,11 +129,11 @@ module.exports = {
   Comm(state = initialState.Comm, action = null) {
     switch (action.type) {
       case c.REQUEST_INIT:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isLoading: true
         });
       case c.RECEIVE_INIT:
-        return Object.assign({}, state, {
+        return updateState(state, {
           isLoading: false,
           isReady: true
         });
@@ -115,5 +141,4 @@ module.exports = {
         return state;
     }
   }
-
 };

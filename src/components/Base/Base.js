@@ -11,18 +11,19 @@ const Base = React.createClass({
   componentWillMount: function () {
     this.props.dispatch(actions.getPrefs());
     this.props.dispatch(actions.getSuggestedDirectory());
+    this.props.dispatch(actions.getSearchEngines());
 
-    // This sets up the comm stuff.
-    // TODO: replace with getHistory
-    this.props.dispatch(actions.initComm());
+    // Fake
+    this.props.dispatch(actions.getFrecentSites());
+
+    // Legacy
+    // this.props.dispatch(actions.initComm());
   },
   render: function () {
     const prefs = this.props.Prefs;
-    let tiles = this.props.Sites.history;
-
-    if (prefs.showSuggested) {
-      tiles = this.props.Sites.suggested.concat(this.props.Sites.directory).concat(tiles);
-    }
+    const {history, suggested, directory} = this.props.Sites;
+    let tiles = history;
+    if (prefs.showSuggested) tiles = tiles.concat(suggested).concat(directory);
 
     return (<div>
       <Search />

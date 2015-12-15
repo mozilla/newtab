@@ -27,6 +27,7 @@ module.exports = {
       'lib': absolute('./src/lib')
     }
   },
+  devtool: 'source-map',
   module: {
     preLoaders: [{
       test: /\.jsx?$/,

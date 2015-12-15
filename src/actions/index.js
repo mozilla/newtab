@@ -53,6 +53,16 @@ module.exports = {
     };
   },
 
+  getFrecentSites() {
+    return function next(dispatch) {
+      dispatch(request(c.REQUEST_FRECENT));
+      return Platform.sites.getFrecentSites()
+        .then(sites => {
+          dispatch(receive(c.RECEIVE_FRECENT, {sites}));
+        });
+    };
+  },
+
   initComm() {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_INIT));
@@ -73,6 +83,7 @@ module.exports = {
     };
   },
 
+  // Old message passing
   getSearchSuggestions(searchString) {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
@@ -81,6 +92,29 @@ module.exports = {
         searchString,
         remoteTimeout: undefined
       });
+    };
+  },
+
+  // Faked
+  getSuggestions(searchString, engineName) {
+    return function next(dispatch) {
+      dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
+      Platform.search.getSuggestions({
+        searchString,
+        engineName
+      }).then(suggestions => {
+        dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
+      });
+    };
+  },
+
+  getSearchEngines() {
+    return function next(dispatch) {
+      dispatch(request(c.REQUEST_SEARCH_ENGINES));
+      Platform.search.getSearchEngines()
+        .then(results => {
+          dispatch(receive(c.RECEIVE_SEARCH_ENGINES, results));
+        });
     };
   },
 

@@ -12,7 +12,8 @@
     "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
     "react/prop-types": 0,
     "react/sort-comp": 0,
-    "react/no-multi-comp": 0
+    "react/no-multi-comp": 0,
+    "no-unused-vars": [2, {"vars": "all", "args": "none"}]
   },
   "ecmaFeatures": {
     "experimentalObjectRestSpread": true

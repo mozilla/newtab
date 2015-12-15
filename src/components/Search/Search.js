@@ -11,14 +11,15 @@ const Search = React.createClass({
   },
   setValueAndSuggestions: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
-    this.props.dispatch(actions.getSearchSuggestions(value));
+    // this.props.dispatch(actions.getSearchSuggestions(value));
+    this.props.dispatch(actions.getSuggestions(value, 'Google'));
   },
   setValueAndClose: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
     this.refs.input.blur();
   },
   render: function () {
-    const searchString = this.props.Search.searchString;
+    const {searchString, suggestions, currentEngine, otherEngines} = this.props.Search;
     return (<form className="search">
       <div className="search-input-wrapper">
         <div className="search-icon" />
@@ -27,13 +28,16 @@ const Search = React.createClass({
           onChange={e => this.setValueAndSuggestions(e.target.value)}
           onFocus={() => this.setState({focus: true})}
           onBlur={() => setTimeout(() => this.setState({focus: false}), 200)} />
-        <button className="search-submit">Search</button>
+        <button onClick={e => {
+          e.preventDefault();
+          currentEngine.performSearch(searchString);
+        }} className="search-submit">Search</button>
         <SearchMagic
           show={searchString && this.state.focus}
           value={searchString}
-          type={'Google'}
-          suggestions={this.props.Search.suggestions}
-          setValue={this.setValueAndClose} />
+          suggestions={suggestions}
+          currentEngine={currentEngine}
+          otherEngines={otherEngines} />
       </div>
     </form>);
   }
