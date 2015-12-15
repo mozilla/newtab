@@ -1,6 +1,7 @@
 const React = require('react');
 const {connect} = require('react-redux');
 
+const Platform = require('lib/platform');
 const actions = require('actions/index');
 
 const Tile = require('components/Tile/Tile');
@@ -28,7 +29,7 @@ const Base = React.createClass({
     return (<div>
       <Search />
       <div className="grid" hidden={!prefs.enabled}>
-        {tiles.map((tile, index) => <Tile key={index} {...tile} />)}
+        {tiles.map((tile, index) => <Tile key={index} {...tile} goToUrl={Platform.goToUrl} />)}
       </div>
       <Settings />
     </div>);

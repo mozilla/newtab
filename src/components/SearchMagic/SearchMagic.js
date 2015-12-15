@@ -38,4 +38,16 @@ const SearchMagic = React.createClass({
   }
 });
 
+const EngineShape = React.PropTypes.shape({
+  name: React.PropTypes.string.isRequired,
+  placeholder: React.PropTypes.string.isRequired,
+  performSearch: React.PropTypes.func.isRequired
+});
+
+SearchMagic.propTypes = {
+  currentEngine: EngineShape.isRequired,
+  suggestions: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+  otherEngines: React.PropTypes.arrayOf(EngineShape).isRequired
+};
+
 module.exports = SearchMagic;

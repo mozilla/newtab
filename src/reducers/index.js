@@ -95,7 +95,7 @@ module.exports = {
         return updateState(state, {
           history: state.history.slice().map(tile => {
             if (tile.url !== action.url) return tile;
-            return updateState(tile, {imageURI: action.imageURI});
+            return updateState(tile, {imageURI: action.imageURI, imageURI_2x: action.imageURI_2x});
           })
         });
 

@@ -34,11 +34,11 @@ function commRelay(dispatch) {
 }
 
 module.exports = {
-  getScreenshot(url) {
+  getSiteThumbnail(url) {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_SCREENSHOT));
-      dispatch(receive(c.RECEIVE_SCREENSHOT, {url}));
-      // TODO
+      Platform.getSiteThumbnail(url)
+        .then(response => dispatch(receive(c.RECEIVE_SCREENSHOT, Object.assign({url}, response))));
     };
   },
 
@@ -47,17 +47,16 @@ module.exports = {
       dispatch(request(c.REQUEST_SUGGESTED_DIRECTORY));
       return fetch(c.SUGGESTED_TILES_URL)
         .then(response => response.json())
-        .then(response => {
-          dispatch(receive(c.RECEIVE_SUGGESTED_DIRECTORY, response));
-        });
+        .then(response => dispatch(receive(c.RECEIVE_SUGGESTED_DIRECTORY, response)));
     };
   },
 
   getFrecentSites() {
-    return function next(dispatch) {
+    return dispatch => {
       dispatch(request(c.REQUEST_FRECENT));
-      return Platform.sites.getFrecentSites()
+      return Platform.getFrecentSites()
         .then(sites => {
+          sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
           dispatch(receive(c.RECEIVE_FRECENT, {sites}));
         });
     };

@@ -10,10 +10,13 @@ const WebPlaform = {
       // TODO event
     }
   },
-  sites: {
-    getFrecentSites() {
-      return new Promise(resolve => resolve(FAKE_FRECENT));
-    }
+  getFrecentSites() {
+    return new Promise(resolve => resolve(FAKE_FRECENT));
+  },
+  getSiteThumbnail() {
+    return new Promise(resolve => resolve({
+      imageURI: 'http://lorempixel.com/290/180/technics',
+      imageURI_2x: 'http://lorempixel.com/580/360/technics'}));
   },
   search: {
     getCurrentEngine() {
