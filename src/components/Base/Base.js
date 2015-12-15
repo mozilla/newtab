@@ -19,7 +19,7 @@ const Base = React.createClass({
   render: function () {
     const prefs = this.props.Prefs;
     let tiles = this.props.Sites.history;
-    console.log(prefs);
+
     if (prefs.showSuggested) {
       tiles = this.props.Sites.suggested.concat(this.props.Sites.directory).concat(tiles);
     }

@@ -7,10 +7,10 @@ module.exports = function (config) {
     frameworks: ['mocha'],
     reporters: ['mocha'],
     files: [
-      'tests/index.test.js'
+      'tests/index.js'
     ],
     preprocessors: {
-     'tests/**/*.test.js': ['webpack', 'sourcemap']
+     'tests/**/*.js': ['webpack', 'sourcemap']
     },
     webpack: {
       devtool: 'inline-source-map',
@@ -21,7 +21,9 @@ module.exports = function (config) {
           exclude: /node_modules/,
           loader: 'babel',
           query: {
-            presets: ['react']
+            presets: ['es2015', 'react', {
+              plugins: ['transform-object-rest-spread']
+            }]
           }
         }]
       }

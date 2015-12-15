@@ -1,4 +1,6 @@
 // TODO: const OBSERVE_EVENT = 'NewTab:Observe';
+const log = require('lib/log');
+
 class Comm {
 
   constructor() {
@@ -12,7 +14,7 @@ class Comm {
 
   // Dispatch command to browser
   dispatch(command, data = '') {
-    console.log('COMM: DISPATCH', command, data);
+    log('COMM: DISPATCH', command, data);
     document.dispatchEvent(new CustomEvent(this.NEW_TAB_EVENT, {
       detail: {command, data}
     }));
@@ -43,7 +45,7 @@ class Comm {
   }
 
   _baseListener(message) {
-    console.log('COMM: MESSAGE', message.type, message.data);
+    log('COMM: MESSAGE', message.type, message.data);
     const {name, data} = message.data;
     if (this.listeners.has('*')) this.listeners.get('*').forEach(callback => callback(name, data));
     if (this.listeners.has(name)) this.listeners.get(name).forEach(callback => callback(data));

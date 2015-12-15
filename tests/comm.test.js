@@ -61,7 +61,7 @@ describe('Comm', () => {
 
   it('#on should add a listener', done => {
     const testFunction = () => {};
-    listenTabEvent(this.REGISTER_EVENT, message => {
+    listenTabEvent(Comm.REGISTER_EVENT, message => {
       assert.equal(message.command, Comm.REGISTER_EVENT);
       assert.equal(message.data.type, 'foo');
       done();
@@ -73,7 +73,7 @@ describe('Comm', () => {
 
   it('#all should add a listener for all events', done => {
     const testFunction = () => {};
-    listenTabEvent(this.REGISTER_EVENT, message => {
+    listenTabEvent(Comm.REGISTER_EVENT, message => {
       assert.equal(message.command, Comm.REGISTER_EVENT);
       assert.equal(message.data.type, 'foo');
       done();
