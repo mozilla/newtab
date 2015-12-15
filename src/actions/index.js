@@ -48,8 +48,7 @@ module.exports = {
       return fetch(c.SUGGESTED_TILES_URL)
         .then(response => response.json())
         .then(response => {
-          dispatch(receive(c.RECEIVE_SUGGESTED, {tiles: response.suggested}));
-          dispatch(receive(c.RECEIVE_DIRECTORY, {tiles: response.directory}));
+          dispatch(receive(c.RECEIVE_SUGGESTED_DIRECTORY, response));
         });
     };
   },
@@ -63,7 +62,7 @@ module.exports = {
         // Set up relay
         Comm.all(relayEvents, commRelay(dispatch));
 
-        dispatch(receive(c.RECEIVE_INIT, {placesLinks: initialState.placesLinks}));
+        dispatch(receive(c.RECEIVE_INIT, {history: initialState.placesLinks}));
       });
     };
   },

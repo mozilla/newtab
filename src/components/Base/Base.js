@@ -9,20 +9,23 @@ const Settings = require('components/Settings/Settings');
 
 const Base = React.createClass({
   componentWillMount: function () {
+    this.props.dispatch(actions.getPrefs());
     this.props.dispatch(actions.getSuggestedDirectory());
 
     // This sets up the comm stuff.
     // TODO: replace with getHistory
     this.props.dispatch(actions.initComm());
-
-    this.props.dispatch(actions.getPrefs());
   },
   render: function () {
-    console.log(this.props.Prefs);
-    const tiles = this.props.Directory.tiles.concat(this.props.History.tiles);
+    const prefs = this.props.Prefs;
+    let tiles = this.props.Sites.history;
+    if (prefs.showSuggested) {
+      tiles = this.props.Sites.suggested.concat(this.props.Sites.directory).concat(tiles);
+    }
+
     return (<div>
       <Search />
-      <div className="grid">
+      <div className="grid" hidden={!prefs.enabled}>
         {tiles.map((tile, index) => <Tile key={index} {...tile} />)}
       </div>
       <Settings />
