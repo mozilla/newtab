@@ -121,5 +121,12 @@ module.exports = {
     return function next(dispatch) {
       dispatch(receive(c.UPDATE_SEARCH_STRING, {searchString}));
     };
+  },
+
+  // Add all listeners!!!
+  addListeners() {
+    return dispatch => {
+      Platform.prefs.addEventListener(response => dispatch(receive(c.RECEIVE_PREFS, {prefs: response.prefs})));
+    };
   }
 };

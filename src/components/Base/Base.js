@@ -16,6 +16,7 @@ const Base = React.createClass({
 
     // Fake
     this.props.dispatch(actions.getFrecentSites());
+    this.props.dispatch(actions.addListeners());
 
     // Legacy
     // this.props.dispatch(actions.initComm());
@@ -31,7 +32,7 @@ const Base = React.createClass({
       <div className="grid" hidden={!prefs.enabled}>
         {tiles.map((tile, index) => <Tile key={index} {...tile} goToUrl={Platform.goToUrl} />)}
       </div>
-      <Settings />
+      <Settings {...prefs} setPrefs={p => Platform.prefs.set(p)} />
     </div>);
   }
 });

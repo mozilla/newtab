@@ -1,15 +1,34 @@
 const {FAKE_PREFS, FAKE_FRECENT, FAKE_ENGINES} = require('lib/platform-placeholder');
 
+class EventEmitter {
+  constructor() {
+    this._listeners = new Set();
+  }
+  dispatch(data) {
+    this._listeners.forEach(listener => listener(data));
+  }
+  addEventListener(callback) {
+    this._listeners.add(callback);
+  }
+  removeEventListener(callback) {
+    if (callback) this._listeners.remove(callback);
+    else this._listeners.clear();
+  }
+}
+
+class Prefs extends EventEmitter {
+  getCurrent() {
+    return FAKE_PREFS;
+  }
+
+  set(prefs) {
+    Object.keys(prefs).forEach(key => FAKE_PREFS.set(key, prefs[key]));
+    this.dispatch({prefs: FAKE_PREFS});
+  }
+}
+
 const WebPlaform = {
-  prefs: {
-    getCurrent() {
-      return FAKE_PREFS;
-    },
-    set(pref, value) {
-      FAKE_PREFS.set(pref, value);
-      // TODO event
-    }
-  },
+  prefs: new Prefs(),
   getFrecentSites() {
     return new Promise(resolve => resolve(FAKE_FRECENT));
   },
