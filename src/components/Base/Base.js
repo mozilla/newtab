@@ -13,13 +13,18 @@ const Base = React.createClass({
     this.props.dispatch(actions.getPrefs());
     this.props.dispatch(actions.getSuggestedDirectory());
     this.props.dispatch(actions.getSearchEngines());
-
-    // Fake
     this.props.dispatch(actions.getFrecentSites());
+
+    // This adds all our listeners so we can watch for changes
+    // and fire actions if anything updates
     this.props.dispatch(actions.addListeners());
 
-    // Legacy
+    // This will use the message passing API to load history tiles and stuff
+    // We won't need it once all the browser APIs are in place
     // this.props.dispatch(actions.initComm());
+  },
+  componentWillUnmount: function () {
+    this.props.dispatch(actions.removeListeners());
   },
   render: function () {
     const prefs = this.props.Prefs;

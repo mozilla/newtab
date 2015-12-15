@@ -37,7 +37,7 @@ module.exports = {
   getSiteThumbnail(url) {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_SCREENSHOT));
-      Platform.getSiteThumbnail(url)
+      Platform.sites.getThumbnail(url)
         .then(response => dispatch(receive(c.RECEIVE_SCREENSHOT, Object.assign({url}, response))));
     };
   },
@@ -54,7 +54,7 @@ module.exports = {
   getFrecentSites() {
     return dispatch => {
       dispatch(request(c.REQUEST_FRECENT));
-      return Platform.getFrecentSites()
+      return Platform.sites.getFrecent()
         .then(sites => {
           sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
           dispatch(receive(c.RECEIVE_FRECENT, {sites}));
@@ -123,10 +123,25 @@ module.exports = {
     };
   },
 
-  // Add all listeners!!!
+  /**
+   * Initializes all the listeners needed to trigger updates
+   * e.g. if a pref is changed, we want to dispatch a RECEIVE_PREFS action
+   */
   addListeners() {
     return dispatch => {
-      Platform.prefs.addEventListener(response => dispatch(receive(c.RECEIVE_PREFS, {prefs: response.prefs})));
+      Platform.prefs.addEventListener(prefs => dispatch(receive(c.RECEIVE_PREFS, prefs)));
+      Platform.search.addEventListener(engines => dispatch(receive(c.RECEIVE_SEARCH_ENGINES, engines)));
+    };
+  },
+
+  /**
+   * In case we need to tear down the base component for some reason,
+   * remove all listeners.
+   */
+  removeListeners() {
+    return dispatch => {
+      Platform.prefs.removeListeners();
+      Platform.search.removeListeners();
     };
   }
 };

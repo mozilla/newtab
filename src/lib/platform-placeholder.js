@@ -1,3 +1,19 @@
+module.exports.EventEmitter = class EventEmitter {
+  constructor() {
+    this._listeners = new Set();
+  }
+  dispatch(data) {
+    this._listeners.forEach(listener => listener(data));
+  }
+  addEventListener(callback) {
+    this._listeners.add(callback);
+  }
+  removeEventListener(callback) {
+    if (callback) this._listeners.remove(callback);
+    else this._listeners.clear();
+  }
+};
+
 module.exports.FAKE_PREFS = new Map([
   ['browser.newtabpage.rows', 3],
   ['browser.newtabpage.columns', 5],
