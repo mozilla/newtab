@@ -110,7 +110,7 @@ module.exports = {
   getSearchEngines() {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_SEARCH_ENGINES));
-      Platform.search.getSearchEngines()
+      Platform.search.getCurrentEngines()
         .then(results => {
           dispatch(receive(c.RECEIVE_SEARCH_ENGINES, results));
         });

@@ -4,6 +4,7 @@ const classnames = require('classnames');
 const SearchMagic = React.createClass({
   render: function () {
     const currentEngine = this.props.currentEngine;
+    const performSearch = this.props.performSearch;
     return (<div className={classnames('search-magic', {active: this.props.show})}>
       <section className="search-magic-title">
         {currentEngine.placeholder}
@@ -12,7 +13,7 @@ const SearchMagic = React.createClass({
         <ul>
           {this.props.suggestions.map(suggestion => {
             return (<li key={suggestion}>
-              <a onClick={() => currentEngine.performSearch(suggestion)}>{suggestion}</a>
+              <a onClick={() => performSearch({engine: currentEngine.name, searchString: suggestion})}>{suggestion}</a>
             </li>);
           })}
         </ul>
@@ -24,7 +25,7 @@ const SearchMagic = React.createClass({
         <ul>
           {this.props.otherEngines.map(option => {
             return (<li key={option.name}>
-              <a onClick={() => option.performSearch(this.props.value)}>{option.name}</a>
+              <a onClick={() => performSearch({engine: currentEngine.name, searchString: this.props.value})}>{option.name}</a>
             </li>);
           })}
         </ul>
@@ -40,14 +41,15 @@ const SearchMagic = React.createClass({
 
 const EngineShape = React.PropTypes.shape({
   name: React.PropTypes.string.isRequired,
-  placeholder: React.PropTypes.string.isRequired,
-  performSearch: React.PropTypes.func.isRequired
+  placeholder: React.PropTypes.string.isRequired
 });
 
 SearchMagic.propTypes = {
   currentEngine: EngineShape.isRequired,
   suggestions: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
-  otherEngines: React.PropTypes.arrayOf(EngineShape).isRequired
+  otherEngines: React.PropTypes.arrayOf(EngineShape).isRequired,
+  performSearch: React.PropTypes.func.isRequired,
+  value: React.PropTypes.string
 };
 
 module.exports = SearchMagic;

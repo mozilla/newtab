@@ -10,10 +10,9 @@ const initialState = {
     currentEngine: {
       name: '',
       placeholder: '',
-      icons: [],
-      performSearch: () => {}
+      icons: []
     },
-    otherEngines: [],
+    engines: [],
     searchOptions: []
   },
 
@@ -61,8 +60,8 @@ module.exports = {
       case c.RECEIVE_SEARCH_ENGINES:
         return updateState(state, {
           isLoading: false,
-          currentEngine: action.current,
-          otherEngines: action.others
+          currentEngine: action.currentEngine,
+          engines: action.engines
         });
       default:
         return state;

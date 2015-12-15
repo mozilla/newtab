@@ -22,8 +22,11 @@ class Sites extends EventEmitter {
 }
 
 class Search extends EventEmitter {
-  getSearchEngines() {
-    return new Promise(resolve => resolve(FAKE_ENGINES));
+  getCurrentEngines() {
+    return new Promise(resolve => resolve({
+      currentEngine: FAKE_ENGINES.currentEngine,
+      engines: FAKE_ENGINES.engines
+    }));
   }
   getSuggestions({searchString = '', engineName = 'Yahoo'} = {}) {
     return new Promise(resolve => {
@@ -34,15 +37,15 @@ class Search extends EventEmitter {
       ]);
     });
   }
+  performSearch(engine, searchString) {
+    window.location = `https://www.google.ca/search?q=${encodeURI(searchString)}`;
+  }
 }
 
 const WebPlaform = {
   prefs: new Prefs(),
   sites: new Sites(),
-  search: new Search(),
-  goToUrl(url) {
-    window.location = url;
-  }
+  search: new Search()
 };
 
 module.exports = navigator.mozNewTab || WebPlaform;

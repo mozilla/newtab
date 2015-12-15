@@ -35,7 +35,7 @@ const Base = React.createClass({
     return (<div>
       <Search />
       <div className="grid" hidden={!prefs.enabled}>
-        {tiles.map((tile, index) => <Tile key={index} {...tile} goToUrl={Platform.goToUrl} />)}
+        {tiles.map((tile, index) => <Tile key={index} {...tile} />)}
       </div>
       <Settings {...prefs} setPrefs={p => Platform.prefs.set(p)} />
     </div>);

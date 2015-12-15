@@ -30,7 +30,7 @@ const Search = React.createClass({
           onBlur={() => setTimeout(() => this.setState({focus: false}), 200)} />
         <button onClick={e => {
           e.preventDefault();
-          currentEngine.performSearch(searchString);
+          Platform.search.performSearch({engine: currentEngine.name, searchString});
         }} className="search-submit">Search</button>
         <SearchMagic
           show={searchString && this.state.focus}

@@ -56,7 +56,7 @@ module.exports.FAKE_FRECENT = [
 ];
 
 module.exports.FAKE_ENGINES = {
-  current: {
+  currentEngine: {
     name: 'Google',
     placeholder: 'Search With Google',
     icons: [
@@ -66,7 +66,7 @@ module.exports.FAKE_ENGINES = {
       window.location = `https://www.google.ca/search?q=${encodeURI(searchString)}`;
     }
   },
-  others: [
+  engines: [
     'Yahoo',
     'Bing',
     'Amazon.com',
