@@ -1,23 +1,10 @@
+# New new tab
 
-# Search
+## To run
 
-## State object
-- searchString
-- suggestions
-  currentSearchEngine
-  searchOptions
-    name
-    icon
-    url?
+```
+npm install
+npm start
+```
 
-Suggested
-  tiles
-
-Directory
-  tiles
-
-History
-  tiles
-
-ACTIONS
-========
+Set your remote new tab to point to `http://localhost:1944`.
