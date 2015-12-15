@@ -11,8 +11,8 @@ const Search = React.createClass({
   },
   setValueAndSuggestions: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
-    // this.props.dispatch(actions.getSearchSuggestions(value));
-    this.props.dispatch(actions.getSuggestions(value, 'Google'));
+    this.props.dispatch(actions.getSearchSuggestions(value));
+    // this.props.dispatch(actions.getSuggestions(value, 'Google'));
   },
   setValueAndClose: function (value) {
     this.props.dispatch(actions.updateSearchString(value));

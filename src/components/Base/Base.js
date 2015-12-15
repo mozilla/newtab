@@ -12,16 +12,17 @@ const Base = React.createClass({
   componentWillMount: function () {
     this.props.dispatch(actions.getPrefs());
     this.props.dispatch(actions.getSuggestedDirectory());
+
     this.props.dispatch(actions.getSearchEngines());
-    this.props.dispatch(actions.getFrecentSites());
+    // this.props.dispatch(actions.getFrecentSites());
 
     // This adds all our listeners so we can watch for changes
     // and fire actions if anything updates
-    this.props.dispatch(actions.addListeners());
+    // this.props.dispatch(actions.addListeners());
 
     // This will use the message passing API to load history tiles and stuff
     // We won't need it once all the browser APIs are in place
-    // this.props.dispatch(actions.initComm());
+    this.props.dispatch(actions.initComm());
   },
   componentWillUnmount: function () {
     this.props.dispatch(actions.removeListeners());
@@ -35,7 +36,7 @@ const Base = React.createClass({
     return (<div>
       <Search />
       <div className="grid" hidden={!prefs.enabled}>
-        {tiles.map((tile, index) => <Tile key={index} {...tile} goToUrl={Platform.goToUrl} />)}
+        {tiles.map((tile, index) => <Tile key={index} {...tile} />)}
       </div>
       <Settings {...prefs} setPrefs={p => Platform.prefs.set(p)} />
     </div>);
