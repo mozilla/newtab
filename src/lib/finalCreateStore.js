@@ -1,5 +1,5 @@
 const {createStore, applyMiddleware, compose} = require('redux');
-const thunk = require('redux-thunk').default;
+const thunk = require('redux-thunk');
 const createLogger = require('redux-logger');
 
 module.exports = function finalCreateStore(reducer) {
