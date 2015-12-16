@@ -1,7 +1,7 @@
 const c = require('lib/constants');
 const Comm = require('lib/comm');
 const Platform = require('lib/platform');
-const async = require('lib/async');
+const co = require('co');
 
 function request(type) {
   return {type};
@@ -53,12 +53,15 @@ module.exports = {
   },
 
   getFrecentSites() {
-    return async(function* next(dispatch) {
-      dispatch(request(c.REQUEST_FRECENT));
-      const sites = yield Platform.sites.getFrecent();
-      sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
-      dispatch(receive(c.RECEIVE_FRECENT, {sites}));
-    }, this);
+    return dispatch => {
+      const self = this;
+      co(function* () {
+        dispatch(request(c.REQUEST_FRECENT));
+        const sites = yield Platform.sites.getFrecent();
+        sites.forEach(site => dispatch(self.getSiteThumbnail(site.url)));
+        dispatch(receive(c.RECEIVE_FRECENT, {sites}));
+      });
+    };
   },
 
   initComm() {
@@ -94,23 +97,28 @@ module.exports = {
   },
 
   getSuggestions(engineName, searchString) {
-    return async(function* next(dispatch) {
-      dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
-      const suggestions = yield Platform.search.getSuggestions({
-        searchString,
-        engineName
+    return dispatch => {
+      co(function* () {
+        dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
+        const suggestions = yield Platform.search.getSuggestions({
+          searchString,
+          engineName
+        });
+        dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
       });
-      dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
-    });
+    };
   },
 
   getSearchEngines() {
-    return async(function* next(dispatch) {
-      dispatch(request(c.REQUEST_SEARCH_ENGINES));
-      const engines = yield Platform.search.getVisibleEngines();
-      const currentEngine = yield Platform.search.currentEngine;
-      dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {engines, currentEngine}));
-    });
+    return dispatch => {
+      co(function* () {
+        dispatch(request(c.REQUEST_SEARCH_ENGINES));
+        const engines = yield Platform.search.getVisibleEngines();
+        const currentEngine = yield Platform.search.getCurrentEngine();
+        console.log(engines, currentEngine);
+        dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {engines, currentEngine}));
+      });
+    };
   },
 
   updateSearchString(searchString) {

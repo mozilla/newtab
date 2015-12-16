@@ -58,7 +58,7 @@
     @return ($tile-width + 2px) * $n + $tile-gutter-h * ($n - 1)
   }
   @function totalHeight($n) {
-    @return $search-height-offset + ($tile-height + $tile-title-height + 2px) * $n + $tile-gutter-v * ($n - 1)
+    @return $search-height-offset + ($tile-height + $tile-title-height + 2px) * $n + $tile-gutter-v * $n;
   }
 
   @mixin displayN($n) {
