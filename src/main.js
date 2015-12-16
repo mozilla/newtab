@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 const React = require('react');
 const ReactDOM = require('react-dom');
 const {combineReducers} = require('redux');

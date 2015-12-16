@@ -1,5 +1,5 @@
 // TODO: const OBSERVE_EVENT = 'NewTab:Observe';
-const log = require('lib/log');
+const {log} = require('lib/log');
 
 class Comm {
 

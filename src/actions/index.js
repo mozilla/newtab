@@ -1,6 +1,7 @@
 const c = require('lib/constants');
 const Comm = require('lib/comm');
 const Platform = require('lib/platform');
+const async = require('lib/async');
 
 function request(type) {
   return {type};
@@ -94,27 +95,24 @@ module.exports = {
     };
   },
 
-  // Faked
-  getSuggestions(searchString, engineName) {
-    return function next(dispatch) {
+  getSuggestions(engineName, searchString) {
+    return async(function* next(dispatch) {
       dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
-      Platform.search.getSuggestions({
+      const suggestions = yield Platform.search.getSuggestions({
         searchString,
         engineName
-      }).then(suggestions => {
-        dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
       });
-    };
+      dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
+    });
   },
 
   getSearchEngines() {
-    return function next(dispatch) {
+    return async(function* next(dispatch) {
       dispatch(request(c.REQUEST_SEARCH_ENGINES));
-      Platform.search.getCurrentEngines()
-        .then(results => {
-          dispatch(receive(c.RECEIVE_SEARCH_ENGINES, results));
-        });
-    };
+      const engines = yield Platform.search.getVisibleEngines();
+      const currentEngine = yield Platform.search.getCurrentEngine();
+      dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {engines, currentEngine}));
+    });
   },
 
   updateSearchString(searchString) {

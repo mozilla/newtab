@@ -22,13 +22,14 @@ class Sites extends EventEmitter {
 }
 
 class Search extends EventEmitter {
-  getCurrentEngines() {
-    return new Promise(resolve => resolve({
-      currentEngine: FAKE_ENGINES.currentEngine,
-      engines: FAKE_ENGINES.engines
-    }));
+  getVisibleEngines() {
+    return new Promise(resolve => resolve(FAKE_ENGINES.engines));
+  }
+  getCurrentEngine() {
+    return new Promise(resolve => resolve(FAKE_ENGINES.currentEngine));
   }
   getSuggestions({searchString = '', engineName = 'Yahoo'} = {}) {
+    console.log(searchString, engineName);
     return new Promise(resolve => {
       resolve([
         searchString + ' is cool',
@@ -37,8 +38,14 @@ class Search extends EventEmitter {
       ]);
     });
   }
-  performSearch(engine, searchString) {
-    window.location = `https://www.google.ca/search?q=${encodeURI(searchString)}`;
+  performSearch({engine, searchString} = {}) {
+    switch (engine) {
+      case 'Google':
+        window.location = `https://www.google.ca/search?q=${encodeURI(searchString)}`;
+        break;
+      default:
+        window.location = `https://ca.search.yahoo.com/search?q=${encodeURI(searchString)}`;
+    }
   }
 }
 

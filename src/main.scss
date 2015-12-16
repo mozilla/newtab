@@ -2,10 +2,10 @@ $bg-color: #F9F9F9;
 $font: 'Lucida Grande', sans-serif;
 $focus-blue: #00ACFB;
 
-$grid-max-width: 1550px;
-
 $tile-height: 180px;
 $tile-width: 290px;
+$tile-title-height: 36px;
+
 $tile-font-size: 13px;
 $tile-border-radius: 8px;
 $tile-box-shadow: 0 1px 3px #c1c1c1;
@@ -16,6 +16,8 @@ $tile-text-color: #5c5c5c;
 $tile-title-bg-color: #F2F2F2;
 $tile-title-hover-color: #333;
 $tile-title-hover-text-color: white;
+
+$grid-max-width: $tile-width * 4 + $tile-gutter-h * 3;
 
 $search-height: 36px;
 $search-left-padding: 36px;

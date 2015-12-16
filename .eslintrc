@@ -13,10 +13,12 @@
     "react/prop-types": 0,
     "react/sort-comp": 0,
     "react/no-multi-comp": 0,
-    "no-unused-vars": [2, {"vars": "all", "args": "none"}]
+    "no-unused-vars": [2, {"vars": "all", "args": "none"}],
+    "generator-star-spacing": [2, {"before": false, "after": true}]
   },
   "ecmaFeatures": {
-    "experimentalObjectRestSpread": true
+    "experimentalObjectRestSpread": true,
+    "generators": true
   },
   "env": {
     "es6": true,

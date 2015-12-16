@@ -2,6 +2,7 @@ const React = require('react');
 const SearchMagic = require('components/SearchMagic/SearchMagic');
 const {connect} = require('react-redux');
 const actions = require('actions/index');
+const Platform = require('lib/platform');
 
 const Search = React.createClass({
   getInitialState: function () {
@@ -11,15 +12,14 @@ const Search = React.createClass({
   },
   setValueAndSuggestions: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
-    // this.props.dispatch(actions.getSearchSuggestions(value));
-    this.props.dispatch(actions.getSuggestions(value, 'Google'));
+    this.props.dispatch(actions.getSuggestions(this.props.Search.currentEngine.name, value));
   },
   setValueAndClose: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
     this.refs.input.blur();
   },
   render: function () {
-    const {searchString, suggestions, currentEngine, otherEngines} = this.props.Search;
+    const {currentEngine, searchString} = this.props.Search;
     return (<form className="search">
       <div className="search-input-wrapper">
         <div className="search-icon" />
@@ -34,10 +34,7 @@ const Search = React.createClass({
         }} className="search-submit">Search</button>
         <SearchMagic
           show={searchString && this.state.focus}
-          value={searchString}
-          suggestions={suggestions}
-          currentEngine={currentEngine}
-          otherEngines={otherEngines} />
+          {...this.props.Search} />
       </div>
     </form>);
   }
