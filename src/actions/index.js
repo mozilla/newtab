@@ -53,14 +53,12 @@ module.exports = {
   },
 
   getFrecentSites() {
-    return dispatch => {
+    return async(function* next(dispatch) {
       dispatch(request(c.REQUEST_FRECENT));
-      return Platform.sites.getFrecent()
-        .then(sites => {
-          sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
-          dispatch(receive(c.RECEIVE_FRECENT, {sites}));
-        });
-    };
+      const sites = yield Platform.sites.getFrecent();
+      sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
+      dispatch(receive(c.RECEIVE_FRECENT, {sites}));
+    }, this);
   },
 
   initComm() {
@@ -110,7 +108,7 @@ module.exports = {
     return async(function* next(dispatch) {
       dispatch(request(c.REQUEST_SEARCH_ENGINES));
       const engines = yield Platform.search.getVisibleEngines();
-      const currentEngine = yield Platform.search.getCurrentEngine();
+      const currentEngine = yield Platform.search.currentEngine;
       dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {engines, currentEngine}));
     });
   },

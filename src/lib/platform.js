@@ -25,11 +25,10 @@ class Search extends EventEmitter {
   getVisibleEngines() {
     return new Promise(resolve => resolve(FAKE_ENGINES.engines));
   }
-  getCurrentEngine() {
+  get currentEngine() {
     return new Promise(resolve => resolve(FAKE_ENGINES.currentEngine));
   }
   getSuggestions({searchString = '', engineName = 'Yahoo'} = {}) {
-    console.log(searchString, engineName);
     return new Promise(resolve => {
       resolve([
         searchString + ' is cool',
@@ -49,10 +48,10 @@ class Search extends EventEmitter {
   }
 }
 
-const WebPlaform = {
+const WebPlatform = {
   prefs: new Prefs(),
   sites: new Sites(),
   search: new Search()
 };
 
-module.exports = navigator.mozNewTab || WebPlaform;
+module.exports = navigator.mozNewTab || WebPlatform;

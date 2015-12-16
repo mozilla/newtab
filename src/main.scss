@@ -17,7 +17,8 @@ $tile-title-bg-color: #F2F2F2;
 $tile-title-hover-color: #333;
 $tile-title-hover-text-color: white;
 
-$grid-max-width: $tile-width * 4 + $tile-gutter-h * 3;
+//1248
+$grid-max-width: ($tile-width + 2px) * 4 + $tile-gutter-h * 5;
 
 $search-height: 36px;
 $search-left-padding: 36px;
@@ -42,6 +43,7 @@ body {
 }
 
 .grid {
+  padding-left: $tile-gutter-h;
   max-width: $grid-max-width;
   margin: 0 auto;
   text-align: center;

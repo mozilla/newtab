@@ -1,6 +1,5 @@
 .tile {
   position: relative;
-  display: inline-block;
   text-decoration: none;
   border: 1px solid #DDD;
   border-radius: $tile-border-radius;
@@ -63,7 +62,7 @@
   }
 
   @mixin displayN($n) {
-    &:nth-child(-n+$t) { display: inline-block; }
+    &:nth-child(-n+#{$n}) { display: inline-block; }
   }
 
   @mixin heightQuery($n, $t) {
@@ -76,7 +75,7 @@
   &:first-child {display: inline-block; }
 
   @include heightQuery(2, 2);
-  @include heightQuery(2, 2);
+  @include heightQuery(3, 3);
 
   @media (min-width: totalWidth(2)) {
     @include displayN(2);
