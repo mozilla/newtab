@@ -6,7 +6,7 @@ const initialState = {
   isLoading: false
 };
 
-module.exports = function Comm(prevState = initialState.Comm, action) {
+module.exports = function Comm(prevState = initialState, action) {
   switch (action.type) {
     case c.REQUEST_INIT:
       return updateState(prevState, {
