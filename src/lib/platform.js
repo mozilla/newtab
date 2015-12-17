@@ -1,4 +1,4 @@
-const {FAKE_PREFS, FAKE_FRECENT, FAKE_ENGINES, EventEmitter} = require('lib/platform-placeholder');
+const {FAKE_PREFS, FAKE_FRECENT, FAKE_ENGINES, FAKE_THUMBNAILS, EventEmitter} = require('lib/platform-placeholder');
 
 class Prefs extends EventEmitter {
   getCurrent() {
@@ -15,9 +15,7 @@ class Sites extends EventEmitter {
     return new Promise(resolve => resolve(FAKE_FRECENT));
   }
   getThumbnail() {
-    return new Promise(resolve => resolve({
-      imageURI: 'http://lorempixel.com/290/180/technics',
-      imageURI_2x: 'http://lorempixel.com/580/360/technics'}));
+    return new Promise(resolve => resolve(FAKE_THUMBNAILS));
   }
 }
 

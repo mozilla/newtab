@@ -1,4 +1,4 @@
-const req = require.context('.', false, /.test.js$/);
+const req = require.context('.', true, /\.test.js$/);
 const files = req.keys();
 
-files.forEach(file => require(file));
+files.forEach(file => req(file));

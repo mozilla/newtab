@@ -84,3 +84,8 @@ module.exports.FAKE_ENGINES = {
     };
   })
 };
+
+module.exports.FAKE_THUMBNAILS = {
+  imageURI: 'http://lorempixel.com/290/180/technics',
+  imageURI_2x: 'http://lorempixel.com/580/360/technics'
+};

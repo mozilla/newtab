@@ -27,8 +27,6 @@ module.exports = {
   },
 
   updateSearchString(searchString) {
-    return function next(dispatch) {
-      dispatch(receive(c.UPDATE_SEARCH_STRING, {searchString}));
-    };
+    return receive(c.UPDATE_SEARCH_STRING, {searchString});
   }
 };

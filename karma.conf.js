@@ -16,16 +16,7 @@ module.exports = function (config) {
       devtool: 'inline-source-map',
       resolve: webpack.resolve,
       module: {
-        loaders: [{
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          loader: 'babel',
-          query: {
-            presets: ['es2015', 'react', {
-              plugins: ['transform-object-rest-spread']
-            }]
-          }
-        }]
+        loaders: webpack.module.loaders
       }
     },
     webpackMiddleware: {
