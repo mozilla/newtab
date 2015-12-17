@@ -1,7 +1,7 @@
 const c = require('lib/constants');
 const Comm = require('lib/comm');
 const Platform = require('lib/platform');
-const co = require('co');
+const async = require('lib/async');
 
 function request(type) {
   return {type};
@@ -53,15 +53,12 @@ module.exports = {
   },
 
   getFrecentSites() {
-    return dispatch => {
-      const self = this;
-      co(function* () {
-        dispatch(request(c.REQUEST_FRECENT));
-        const sites = yield Platform.sites.getFrecent();
-        sites.forEach(site => dispatch(self.getSiteThumbnail(site.url)));
-        dispatch(receive(c.RECEIVE_FRECENT, {sites}));
-      });
-    };
+    return async(function* (dispatch) {
+      dispatch(request(c.REQUEST_FRECENT));
+      const sites = yield Platform.sites.getFrecent();
+      sites.forEach(site => dispatch(self.getSiteThumbnail(site.url)));
+      dispatch(receive(c.RECEIVE_FRECENT, {sites}));
+    }, this);
   },
 
   initComm() {
@@ -97,28 +94,25 @@ module.exports = {
   },
 
   getSuggestions(engineName, searchString) {
-    return dispatch => {
-      co(function* () {
-        dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
-        const suggestions = yield Platform.search.getSuggestions({
-          searchString,
-          engineName
-        });
-        dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
+    return async(function* (dispatch) {
+      dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
+      const suggestions = yield Platform.search.getSuggestions({
+        searchString,
+        engineName
       });
-    };
+      dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
+    });
   },
 
-  getSearchEngines() {
-    return dispatch => {
-      co(function* () {
-        dispatch(request(c.REQUEST_SEARCH_ENGINES));
-        const engines = yield Platform.search.getVisibleEngines();
-        const currentEngine = yield Platform.search.getCurrentEngine();
-        console.log(engines, currentEngine);
-        dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {engines, currentEngine}));
-      });
-    };
+  getSearchEngines: function () {
+    return async(function* (dispatch) {
+      dispatch(request(c.REQUEST_SEARCH_ENGINES));
+
+      const currentEngine = yield Platform.search.getCurrentEngine();
+      const engines = yield Platform.search.getVisibleEngines();
+
+      dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {currentEngine, engines}));
+    });
   },
 
   updateSearchString(searchString) {
@@ -133,8 +127,8 @@ module.exports = {
    */
   addListeners() {
     return dispatch => {
-      Platform.prefs.addEventListener(prefs => dispatch(receive(c.RECEIVE_PREFS, prefs)));
-      Platform.search.addEventListener(engines => dispatch(receive(c.RECEIVE_SEARCH_ENGINES, engines)));
+      Platform.prefs.addEventListener('message', prefs => dispatch(receive(c.RECEIVE_PREFS, prefs)));
+      Platform.search.addEventListener('message', engines => dispatch(receive(c.RECEIVE_SEARCH_ENGINES, engines)));
     };
   },
 

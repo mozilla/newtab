@@ -12,11 +12,19 @@ const Search = React.createClass({
   },
   setValueAndSuggestions: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
-    this.props.dispatch(actions.getSuggestions(this.props.Search.currentEngine.name, value));
+    // this.props.dispatch(actions.getSuggestions(this.props.Search.currentEngine.name, value));
   },
   setValueAndClose: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
     this.refs.input.blur();
+  },
+  performSearch: function (options) {
+    Platform.search.performSearch({
+      engineName: options.engineName,
+      searchString: options.searchString,
+      healthReportKey: '1',
+      searchPurpose: 'd'
+    });
   },
   render: function () {
     const {currentEngine, searchString} = this.props.Search;
@@ -30,10 +38,11 @@ const Search = React.createClass({
           onBlur={() => setTimeout(() => this.setState({focus: false}), 200)} />
         <button onClick={e => {
           e.preventDefault();
-          Platform.search.performSearch({engine: currentEngine.name, searchString});
+          this.performSearch({engineName: currentEngine.name, searchString});
         }} className="search-submit">Search</button>
         <SearchMagic
           show={searchString && this.state.focus}
+          performSearch={this.performSearch}
           {...this.props.Search} />
       </div>
     </form>);

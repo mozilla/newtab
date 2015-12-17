@@ -9,7 +9,9 @@ const distDir = './www';
 const distFilename = 'main.js'
 
 // TODO: config
-const config = {};
+const config = {
+  DEVELOPMENT: true
+};
 
 module.exports = {
   entry: srcPath,
@@ -27,7 +29,7 @@ module.exports = {
       'lib': absolute('./src/lib')
     }
   },
-  devtool: 'source-map',
+  devtool: 'eval',
   module: {
     preLoaders: [{
       test: /\.jsx?$/,
@@ -39,10 +41,16 @@ module.exports = {
       include: /.\/src\//,
       loader: 'babel',
       query: {
-        presets: ['es2015', 'react', {
-          plugins: ['transform-object-rest-spread']
+        // presets: ['es2015', 'react', {
+        //   plugins: ['transform-object-rest-spread']
+        // }]
+        presets: ['react', {
+          plugins: [
+            'transform-es2015-destructuring',
+            'transform-es2015-parameters',
+            'transform-strict-mode'
+          ]
         }]
-        //presets: ['react']
       }
     }]
   },

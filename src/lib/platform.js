@@ -1,10 +1,7 @@
 const {FAKE_PREFS, FAKE_FRECENT, FAKE_ENGINES, EventEmitter} = require('lib/platform-placeholder');
 
-const api = navigator.mozNewTab || {prefs: {}, search: {}, sites: {}};
-
 class Prefs extends EventEmitter {
   getCurrent() {
-    if (api.prefs.getCurrent) return api.prefs.getCurrent();
     return FAKE_PREFS;
   }
   set(prefs) {
@@ -26,11 +23,9 @@ class Sites extends EventEmitter {
 
 class Search extends EventEmitter {
   getVisibleEngines() {
-    if (api.search.getVisibleEngines) return api.search.getVisibleEngines();
     return new Promise(resolve => resolve(FAKE_ENGINES.engines));
   }
   getCurrentEngine() {
-    if (api.search.getCurrentEngine) return api.search.getCurrentEngine();
     return new Promise(resolve => resolve(FAKE_ENGINES.currentEngine));
   }
   getSuggestions({searchString = '', engineName = 'Yahoo'} = {}) {
@@ -42,8 +37,8 @@ class Search extends EventEmitter {
       ]);
     });
   }
-  performSearch({engine, searchString} = {}) {
-    switch (engine) {
+  performSearch({engineName = 'Google', searchString = '', healthReportKey = '1', searchPurpose = 'd'} = {}) {
+    switch (engineName) {
       case 'Google':
         window.location = `https://www.google.ca/search?q=${encodeURI(searchString)}`;
         break;
@@ -58,5 +53,8 @@ const WebPlatform = {
   sites: new Sites(),
   search: new Search()
 };
+
+// navigator.mozNewTab.sites.getSuggestions = WebPlatform.search.getSuggestions;
+// navigator.mozNewTab.sites = WebPlatform.sites;
 
 module.exports = navigator.mozNewTab || WebPlatform;

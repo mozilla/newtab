@@ -5,10 +5,10 @@ module.exports.EventEmitter = class EventEmitter {
   dispatch(data) {
     this._listeners.forEach(listener => listener(data));
   }
-  addEventListener(callback) {
+  addEventListener(event, callback) {
     this._listeners.add(callback);
   }
-  removeEventListener(callback) {
+  removeEventListener(event, callback) {
     if (callback) this._listeners.remove(callback);
     else this._listeners.clear();
   }
