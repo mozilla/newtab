@@ -1,13 +1,32 @@
 const React = require('react');
 const classnames = require('classnames');
 
+const Icon = React.createClass({
+  render: function () {
+    return (<img className={classnames('icon', {padded: this.props.padded})}
+      width={this.props.width}
+      height={this.props.height}
+      src={this.props.url}
+      alt={this.props.alt} />);
+  }
+});
+
+Icon.propTypes = {
+  src: React.PropTypes.string.isRequired,
+  height: React.PropTypes.number,
+  width: React.PropTypes.number,
+  alt: React.PropTypes.string,
+  padded: React.PropTypes.bool
+};
+
 const SearchMagic = React.createClass({
   render: function () {
     const currentEngine = this.props.currentEngine;
     const performSearch = this.props.performSearch;
-    return (<div className={classnames('search-magic', {active: this.props.show})}>
-      <section className="search-magic-title">
-        {currentEngine.placeholder}
+    const currentIcon = currentEngine.icons[0] || {};
+    return (<div className="search-magic" hidden={!this.props.show}>
+      <section className="search-magic-title" hidden={!this.props.suggestions.length}>
+        <Icon padded {...currentIcon} /> {currentEngine.placeholder}
       </section>
       <section className="search-magic-suggestions" hidden={!this.props.suggestions.length}>
         <ul>
@@ -19,7 +38,7 @@ const SearchMagic = React.createClass({
         </ul>
       </section>
       <section className="search-magic-title">
-        Search for <strong>{this.props.searchString}</strong> with:
+        <span>Search for <strong>{this.props.searchString}</strong> with:</span>
       </section>
       <section className="search-magic-other-search-partners">
         <ul>
@@ -27,7 +46,7 @@ const SearchMagic = React.createClass({
             const icon = option.icons[0];
             return (<li key={option.name}>
               <a onClick={() => performSearch({engineName: option.name, searchString: this.props.searchString})}>
-              <img width={icon.width} height={icon.height} src={icon.url} /></a>
+              <Icon {...icon} alt={option.name} /></a>
             </li>);
           })}
         </ul>

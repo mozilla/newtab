@@ -50,6 +50,10 @@ body {
   text-align: center;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 @import './components/Tile/Tile';
 @import './components/Search/Search';
 @import './components/Settings/Settings';

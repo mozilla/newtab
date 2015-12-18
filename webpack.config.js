@@ -10,7 +10,8 @@ const distFilename = 'main.js'
 
 // TODO: config
 const config = {
-  DEVELOPMENT: true
+  DEVELOPMENT: true,
+  LOGGING: false
 };
 
 module.exports = {

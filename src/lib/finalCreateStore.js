@@ -10,7 +10,7 @@ module.exports = function finalCreateStore(reducer) {
   });
 
   const middleware = [thunk];
-  if (__CONFIG__.DEVELOPMENT) middleware.push(loggerMiddleware);
+  if (__CONFIG__.LOGGING) middleware.push(loggerMiddleware);
 
   const configureStoreFn = compose(
     applyMiddleware(...middleware)

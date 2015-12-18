@@ -4,9 +4,12 @@
   $magic-blue: #0069D9;
   $magic-grey: #F7F7F7;
 
-  display: none;
-  &.active {
-    display: block;
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    &.padded {
+      margin-right: 5px;
+    }
   }
 
   z-index: 100;
@@ -29,6 +32,8 @@
   .search-magic-title {
     padding: 5px 10px;
     background-color: $magic-grey;
+    display: flex;
+    align-items: center;
   }
 
   .search-magic-suggestions {
