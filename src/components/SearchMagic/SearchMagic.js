@@ -12,7 +12,7 @@ const Icon = React.createClass({
 });
 
 Icon.propTypes = {
-  src: React.PropTypes.string.isRequired,
+  src: React.PropTypes.string,
   height: React.PropTypes.number,
   width: React.PropTypes.number,
   alt: React.PropTypes.string,
