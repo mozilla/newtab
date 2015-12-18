@@ -1,24 +1,38 @@
-# New new tab
+# New tab
 
-## To run
+This is a remote implementation of the "new tab" page for Firefox. It can be run inside the browser, or on its own with a "platform" shim.
+
+## Developer Setup
+
+### Web assets
+
+```bash
+git clone https://github.com/mozilla/newtab.git
+cd newtab
+npm install && npm start
+```
+
+This will start a dev server and build all necessary files in developer mode
+
+### Firefox
+
+First, clone the Firefox code currently in development for this repo in at [mozilla/newtab-dev](https://github.com/mozilla/newtab-dev).
+
+```bash
+git clone https://github.com/mozilla/newtab-dev.git
+```
+
+Edit the file at `browser/components/newtab/RemoteNewTabLocation.jsm` to point to `http://localhost:1944`:
+
+```diff
+-const DEFAULT_PAGE_LOCATION = "http://localhost:8000/" +
+-                              "v%VERSION%/%CHANNEL%/%LOCALE%/index.html";
++const DEFAULT_PAGE_LOCATION = "http://localhost:1944";
+```
+
+Finally, build and run with `mach`:
 
 ```
-npm install
-npm start
+./mach build
+./mach run
 ```
-
-Set your remote new tab to point to `http://localhost:1944`.
-
-## What's working?
-
-* Search suggestions
-* Prefs are loaded (but not settable)
-* Fetching directory/suggested tiles
-* Fetching history tiles
-
-## TODO
-
-* Setting page location properly
-* Getting screen shots
-* Service worker caching
-* lots of other stuff
