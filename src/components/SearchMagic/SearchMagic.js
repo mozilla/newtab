@@ -52,7 +52,10 @@ const SearchMagic = React.createClass({
         </ul>
       </section>
       <section className="search-magic-settings">
-        <button>
+        <button onClick={(e) => {
+          e.preventDefault();
+          this.props.manageEngines();
+        }}>
           Change Search Settings
         </button>
       </section>
@@ -70,7 +73,8 @@ SearchMagic.propTypes = {
   suggestions: React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
   engines: React.PropTypes.arrayOf(EngineShape).isRequired,
   searchString: React.PropTypes.string,
-  performSearch: React.PropTypes.func.isRequired
+  performSearch: React.PropTypes.func.isRequired,
+  manageEngines: React.PropTypes.func.isRequired
 };
 
 module.exports = SearchMagic;

@@ -27,21 +27,29 @@ module.exports = function Search(prevState = initialState, action = null) {
     case c.RECEIVE_SEARCH_SUGGESTIONS:
       return updateState(prevState, {
         isLoading: false,
-        suggestions: action.suggestions || []
+        suggestions: action.body.remote || []
       });
-    case c.REQUEST_SEARCH_ENGINES:
+    case c.REQUEST_CURRENT_SEARCH_ENGINE:
       return updateState(prevState, {
         isLoading: true
       });
-    case c.RECEIVE_SEARCH_ENGINES:
+    case c.RECEIVE_CURRENT_SEARCH_ENGINE:
       return updateState(prevState, {
         isLoading: false,
         currentEngine: {
-          name: action.currentEngine.name,
-          placeholder: action.currentEngine.placeholder,
-          icons: action.currentEngine.icons.map(icon => JSON.parse(icon.toJSON()))
-        },
-        engines: action.engines.map(engine => ({
+          name: action.body.name,
+          placeholder: action.body.placeholder,
+          icons: action.body.icons.map(icon => JSON.parse(icon.toJSON()))
+        }
+      });
+    case c.REQUEST_VISIBLE_SEARCH_ENGINES:
+      return updateState(prevState, {
+        isLoading: true
+      });
+    case c.RECEIVE_VISIBLE_SEARCH_ENGINES:
+      return updateState(prevState, {
+        isLoading: false,
+        engines: action.body.map(engine => ({
           name: engine.name,
           placeholder: engine.placeholder,
           icons: engine.icons.map(icon => JSON.parse(icon.toJSON()))

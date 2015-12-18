@@ -12,7 +12,7 @@ const Search = React.createClass({
   },
   setValueAndSuggestions: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
-    // this.props.dispatch(actions.getSuggestions(this.props.Search.currentEngine.name, value));
+    this.props.dispatch(actions.getSuggestions(this.props.Search.currentEngine.name, value));
   },
   setValueAndClose: function (value) {
     this.props.dispatch(actions.updateSearchString(value));
@@ -43,6 +43,7 @@ const Search = React.createClass({
         <SearchMagic
           show={searchString && this.state.focus}
           performSearch={this.performSearch}
+          manageEngines={() => Platform.search.manageEngines()}
           {...this.props.Search} />
       </div>
     </form>);

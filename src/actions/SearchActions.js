@@ -7,23 +7,35 @@ module.exports = {
   getSuggestions(engineName, searchString) {
     return async(function* (dispatch) {
       dispatch(request(c.REQUEST_SEARCH_SUGGESTIONS));
-      const suggestions = yield Platform.search.getSuggestions({
+      const body = yield Platform.search.getSuggestions({
         searchString,
         engineName
       });
-      dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {suggestions}));
-    });
+      dispatch(receive(c.RECEIVE_SEARCH_SUGGESTIONS, {body}));
+    }, this);
   },
 
-  getSearchEngines: function () {
+  getCurrentEngine() {
     return async(function* (dispatch) {
-      dispatch(request(c.REQUEST_SEARCH_ENGINES));
+      dispatch(request(c.REQUEST_CURRENT_SEARCH_ENGINE));
+      const body = yield Platform.search.getCurrentEngine();
+      dispatch(receive(c.RECEIVE_CURRENT_SEARCH_ENGINE, {body}));
+    }, this);
+  },
 
-      const currentEngine = yield Platform.search.getCurrentEngine();
-      const engines = yield Platform.search.getVisibleEngines();
+  getVisibleEngines() {
+    return async(function* (dispatch) {
+      dispatch(request(c.REQUEST_VISIBLE_SEARCH_ENGINES));
+      const body = yield Platform.search.getVisibleEngines();
+      dispatch(receive(c.RECEIVE_VISIBLE_SEARCH_ENGINES, {body}));
+    }, this);
+  },
 
-      dispatch(receive(c.RECEIVE_SEARCH_ENGINES, {currentEngine, engines}));
-    });
+  getSearchEngines() {
+    return dispatch => {
+      dispatch(this.getCurrentEngine());
+      dispatch(this.getVisibleEngines());
+    };
   },
 
   updateSearchString(searchString) {

@@ -16,9 +16,9 @@ const Base = React.createClass({
     this.props.dispatch(actions.getSearchEngines());
     // this.props.dispatch(actions.getFrecentSites());
 
-    // // This adds all our listeners so we can watch for changes
-    // // and fire actions if anything updates
-    // this.props.dispatch(actions.addListeners());
+    // This adds all our listeners so we can watch for changes
+    // and fire actions if anything updates
+    this.props.dispatch(actions.addListeners());
 
     // This will use the message passing API to load history tiles and stuff
     // We won't need it once all the browser APIs are in place

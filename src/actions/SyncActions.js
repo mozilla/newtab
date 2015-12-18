@@ -1,6 +1,7 @@
 const c = require('lib/constants');
 const {receive} = require('lib/utils');
 const Platform = require('lib/platform');
+const {log} = require('lib/log');
 
 module.exports = {
   /**
@@ -10,7 +11,9 @@ module.exports = {
   addListeners() {
     return dispatch => {
       Platform.prefs.addEventListener('message', prefs => dispatch(receive(c.RECEIVE_PREFS, prefs)));
-      Platform.search.addEventListener('message', engines => dispatch(receive(c.RECEIVE_SEARCH_ENGINES, engines)));
+      Platform.search.addEventListener('enginechange', event => {
+        dispatch(receive(c.RECEIVE_CURRENT_SEARCH_ENGINE, {body: event.engine}));
+      });
     };
   },
 
@@ -20,8 +23,9 @@ module.exports = {
    */
   removeListeners() {
     return dispatch => {
-      Platform.prefs.removeListeners();
-      Platform.search.removeListeners();
+      // TODO
+      // Platform.prefs.removeListeners();
+      // Platform.search.removeListeners();
     };
   }
 };

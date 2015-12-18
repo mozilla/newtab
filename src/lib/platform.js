@@ -28,11 +28,18 @@ class Search extends EventEmitter {
   }
   getSuggestions({searchString = '', engineName = 'Yahoo'} = {}) {
     return new Promise(resolve => {
-      resolve([
-        searchString + ' is cool',
-        searchString + ' sucks',
-        searchString + ' is ok'
-      ]);
+      resolve({
+        engineName,
+        searchString,
+        formHistory: [''],
+        remote: [
+          searchString,
+          searchString + 'rules',
+          searchString + ' is cool',
+          searchString + ' sucks',
+          searchString + ' is ok'
+        ]
+      });
     });
   }
   performSearch({engineName = 'Google', searchString = '', healthReportKey = '1', searchPurpose = 'd'} = {}) {
@@ -43,6 +50,9 @@ class Search extends EventEmitter {
       default:
         window.location = `https://ca.search.yahoo.com/search?q=${encodeURI(searchString)}`;
     }
+  }
+  manageEngines() {
+    // this opens about:preferences#search
   }
 }
 
