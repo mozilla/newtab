@@ -2,6 +2,7 @@ const React = require('react');
 const {connect} = require('react-redux');
 
 const Platform = require('lib/platform');
+const TileUtils = require('lib/TileUtils');
 const actions = require('actions/index');
 
 const Tile = require('components/Tile/Tile');
@@ -28,9 +29,9 @@ const Base = React.createClass({
   },
   render: function () {
     const prefs = this.props.Prefs;
-    const {history, suggested, directory} = this.props.Sites;
+    const {history, directory} = this.props.Sites;
     let tiles = history;
-    if (prefs.showSuggested) tiles = tiles.concat(suggested).concat(directory);
+    if (prefs.showSuggested) tiles = TileUtils.getMergedLinks([history, directory]);
 
     return (<div>
       <Search />

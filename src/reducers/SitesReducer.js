@@ -1,5 +1,5 @@
 const c = require('lib/constants');
-const formatHistoryTiles = require('lib/formatHistoryTiles');
+const TileUtils = require('lib/TileUtils');
 const {updateState} = require('lib/utils');
 
 const initialState = {
@@ -24,14 +24,14 @@ module.exports = function Sites(prevState = initialState, action = null) {
       return updateState(prevState, {
         isSuggestedLoading: false,
         suggested: action.suggested,
-        directory: action.directory
+        directory: TileUtils.formatDirectoryTiles(action.directory)
       });
     case c.REQUEST_FRECENT:
       return updateState(prevState, {isHistoryLoading: true});
     case c.RECEIVE_FRECENT:
       return updateState(prevState, {
         isHistoryLoading: false,
-        history: formatHistoryTiles(action.sites)
+        history: TileUtils.formatHistoryTiles(action.sites)
       });
     case c.REQUEST_SCREENSHOT:
       return prevState;
@@ -50,7 +50,7 @@ module.exports = function Sites(prevState = initialState, action = null) {
     case c.RECEIVE_INIT:
       return updateState(prevState, {
         isHistoryLoading: false,
-        history: formatHistoryTiles(action.history)
+        history: TileUtils.formatHistoryTiles(action.history)
       });
 
     default:
