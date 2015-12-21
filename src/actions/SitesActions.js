@@ -7,7 +7,7 @@ module.exports = {
   getSiteThumbnail(url) {
     return function next(dispatch) {
       dispatch(request(c.REQUEST_SCREENSHOT));
-      Platform.sites.getThumbnail(url)
+      Platform.places.getThumbnail(url)
         .then(response => dispatch(receive(c.RECEIVE_SCREENSHOT, Object.assign({url}, response))));
     };
   },
@@ -24,8 +24,8 @@ module.exports = {
   getFrecentSites() {
     return async(function* (dispatch) {
       dispatch(request(c.REQUEST_FRECENT));
-      const sites = yield Platform.sites.getFrecent();
-      sites.forEach(site => dispatch(self.getSiteThumbnail(site.url)));
+      const sites = yield Platform.places.getFrecentSites();
+      sites.forEach(site => dispatch(this.getSiteThumbnail(site.url)));
       dispatch(receive(c.RECEIVE_FRECENT, {sites}));
     }, this);
   }

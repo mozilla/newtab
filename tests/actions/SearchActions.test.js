@@ -9,23 +9,41 @@ const mockStore = configureMockStore([require('redux-thunk')]);
 describe('SearchActions', () => {
   describe('#getSuggestions', () => {
     it('should dispatch the right actions', done => {
-      const suggestions = ['hello is cool', 'hello sucks', 'hello is ok'];
+      const suggestions = ['hello', 'hello rules', 'hello is cool', 'hello sucks', 'hello is ok'];
       const expectedActions = [
         {type: c.REQUEST_SEARCH_SUGGESTIONS},
-        {type: c.RECEIVE_SEARCH_SUGGESTIONS, suggestions},
-      ];
-      const store = mockStore({search: {}), expectedActions, done);
-      store.dispatch(SearchActions.getSuggestions({engineName: 'Google', searchString: 'hello'}));
-    });
-  });
-  describe('#getSearchEngines', () => {
-    it('should dispatch the right actions', done => {
-      const expectedActions = [
-        {type: c.REQUEST_SEARCH_ENGINES, },
-        {type: c.RECEIVE_SEARCH_ENGINES, currentEngine, engines},
+        {
+          type: c.RECEIVE_SEARCH_SUGGESTIONS,
+          body: {
+            engineName: 'Google',
+            searchString: 'hello',
+            formHistory: [ '' ],
+            remote: suggestions
+          }
+        },
       ];
       const store = mockStore({search: {}}, expectedActions, done);
-      store.dispatch(SearchActions.getSearchEngines());
+      store.dispatch(SearchActions.getSuggestions('Google', 'hello'));
+    });
+  });
+  describe('#getCurrentEngine', () => {
+    it('should dispatch the right actions', done => {
+      const expectedActions = [
+        {type: c.REQUEST_CURRENT_SEARCH_ENGINE},
+        {type: c.RECEIVE_CURRENT_SEARCH_ENGINE, body: currentEngine},
+      ];
+      const store = mockStore({search: {}}, expectedActions, done);
+      store.dispatch(SearchActions.getCurrentEngine());
+    });
+  });
+  describe('#getVisibleEngines', () => {
+    it('should dispatch the right actions', done => {
+      const expectedActions = [
+        {type: c.REQUEST_VISIBLE_SEARCH_ENGINES},
+        {type: c.RECEIVE_VISIBLE_SEARCH_ENGINES, body: engines},
+      ];
+      const store = mockStore({search: {}}, expectedActions, done);
+      store.dispatch(SearchActions.getVisibleEngines());
     });
   });
   describe('#updateSearchString', () => {

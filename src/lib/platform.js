@@ -10,8 +10,8 @@ class Prefs extends EventEmitter {
   }
 }
 
-class Sites extends EventEmitter {
-  getFrecent() {
+class Places extends EventEmitter {
+  getFrecentSites() {
     return new Promise(resolve => resolve(FAKE_FRECENT));
   }
   getThumbnail() {
@@ -34,7 +34,7 @@ class Search extends EventEmitter {
         formHistory: [''],
         remote: [
           searchString,
-          searchString + 'rules',
+          searchString + ' rules',
           searchString + ' is cool',
           searchString + ' sucks',
           searchString + ' is ok'
@@ -58,7 +58,7 @@ class Search extends EventEmitter {
 
 const WebPlatform = {
   prefs: new Prefs(),
-  sites: new Sites(),
+  places: new Places(),
   search: new Search()
 };
 

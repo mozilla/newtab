@@ -13,7 +13,8 @@ const Base = React.createClass({
   componentWillMount: function () {
     // this.props.dispatch(actions.getPrefs());
     this.props.dispatch(actions.getSuggestedDirectory());
-    this.props.dispatch(actions.getSearchEngines());
+    this.props.dispatch(actions.getCurrentEngine());
+    this.props.dispatch(actions.getVisibleEngines());
     // this.props.dispatch(actions.getFrecentSites());
 
     // This adds all our listeners so we can watch for changes
@@ -34,7 +35,7 @@ const Base = React.createClass({
     if (prefs.showSuggested) tiles = TileUtils.getMergedLinks([history, directory]);
 
     return (<div>
-      <Search />
+      <Search foo={10} />
       <div className="grid" hidden={!prefs.enabled}>
         {tiles.map((tile, index) => <Tile key={index} {...tile} />)}
       </div>

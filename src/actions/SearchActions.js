@@ -31,13 +31,6 @@ module.exports = {
     }, this);
   },
 
-  getSearchEngines() {
-    return dispatch => {
-      dispatch(this.getCurrentEngine());
-      dispatch(this.getVisibleEngines());
-    };
-  },
-
   updateSearchString(searchString) {
     return receive(c.UPDATE_SEARCH_STRING, {searchString});
   }
