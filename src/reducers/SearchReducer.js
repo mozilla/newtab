@@ -15,7 +15,6 @@ const initialState = {
 };
 
 module.exports = function Search(prevState = initialState, action = null) {
-  console.log('ACTION RECEIVES', action);
   switch (action.type) {
     case c.UPDATE_SEARCH_STRING:
       return updateState(prevState, {
