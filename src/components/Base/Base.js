@@ -15,7 +15,7 @@ const Base = React.createClass({
     this.props.dispatch(actions.getSuggestedDirectory());
     this.props.dispatch(actions.getCurrentEngine());
     this.props.dispatch(actions.getVisibleEngines());
-    // this.props.dispatch(actions.getFrecentSites());
+    this.props.dispatch(actions.getFrecentSites());
 
     // This adds all our listeners so we can watch for changes
     // and fire actions if anything updates
