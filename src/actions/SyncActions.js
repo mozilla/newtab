@@ -13,6 +13,9 @@ module.exports = {
       Platform.search.addEventListener('enginechange', event => {
         dispatch(receive(c.RECEIVE_CURRENT_SEARCH_ENGINE, {body: event.engine}));
       });
+      Platform.search.addEventListener('visibleenginechange', event => {
+        dispatch(receive(c.RECEIVE_VISIBLE_SEARCH_ENGINES, {body: event.engines}));
+      });
     };
   },
 
