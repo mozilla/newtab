@@ -11,7 +11,7 @@ const distFilename = 'main.js'
 // TODO: config
 const config = {
   DEVELOPMENT: true,
-  LOGGING: true
+  LOGGING: false
 };
 
 module.exports = {
