@@ -4,6 +4,7 @@ const Tile = React.createClass({
   render: function () {
     return (<a className="tile" href={this.props.url}>
       <div className="tile-img-container">
+        <input className="control control-block" type="button" title="Remove this site"></input>
         {this.props.imageURI && <div className="tile-img" style={{backgroundImage: `url(${this.props.imageURI})`}} />}
         {this.props.enhancedImageURI && <div className="tile-img-rollover" style={{backgroundImage: `url(${this.props.enhancedImageURI})`}} />}
       </div>
