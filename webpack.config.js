@@ -39,7 +39,7 @@ module.exports = {
     }],
     loaders: [{
       test: /\.jsx?$/,
-      include: /.\/src\//,
+      include: /.\/(src|tests)\//,
       loader: 'babel',
       query: {
         // presets: ['es2015', 'react', {
